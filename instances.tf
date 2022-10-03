@@ -20,7 +20,7 @@ resource "google_compute_health_check" "autohealing" {
   check_interval_sec  = 5
   timeout_sec         = 5
   healthy_threshold   = 2
-  unhealthy_threshold = 10 # 50 seconds
+  unhealthy_threshold = 5 # 25 seconds
 
   http_health_check {
     request_path = "/"
@@ -38,8 +38,8 @@ resource "google_compute_instance_group_manager" "vm_instance_manager" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.autohealing.id
-    initial_delay_sec = 60
+    initial_delay_sec = 20
   }
-
+  
   target_size = 2
 }
